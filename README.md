@@ -1,2 +1,1 @@
-# zapest.com
-zapest.com
+# Simple as that
