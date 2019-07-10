@@ -1,1 +1,112 @@
-Hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Zapest</title>
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1">
+<style>
+  body{
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+}
+#main {
+    position:absolute; 
+    height:100%; width:100%;
+    display: table;
+}
+#content {
+    white-space: pre-wrap;
+    outline: 0;
+    font-family:sans-serif;
+    color:#333;
+    font-size:2em;
+    font-weight: 200;
+    padding:3em;
+}
+
+</style>
+</head>
+<body onload="javascript:loadContent();">
+<div id="main">
+<div id="content" onclick="javascript:editme();"></div>
+</div>
+<script>
+
+var content;
+var helpText = 'Click here and start typing!';
+
+
+//function that alows editing
+function editme(){
+	content.contentEditable='true';
+	content.focus();
+}
+
+//To save 
+function saveme(){
+	setCookie('content',content.innerText,365);	
+} 
+
+//Load contents onload
+function loadContent(){	 
+  
+	content = document.getElementById("content");
+    content.addEventListener("input", saveme);
+    //content.addEventListener("focus", function(){  content.innerText = turndownService.turndown(content.innerHTML); });
+
+    if(getCookie('content')=="<br>"){
+		content.innerHTML = helpText;
+	}else
+	if(getCookie('content')!=""){
+        content.innerHTML = getCookie('content');; 
+	} else {
+		content.innerHTML = helpText;
+	}
+}
+
+//Clear the contents
+function clearme(){
+	if(getCookie('content')){
+		setCookie('content','',365);
+	}
+	content.innerHTML=helpText;
+}
+
+//fetch cookies
+function getCookie(c_name){
+		if (document.cookie.length>0){  
+			c_start=document.cookie.indexOf(c_name + "="); 
+				if (c_start!=-1){ 
+					c_start=c_start + c_name.length+1;
+					c_end=document.cookie.indexOf(";",c_start);
+					
+					if (c_end==-1) c_end=document.cookie.length
+					return unescape(document.cookie.substring(c_start,c_end));
+				}
+		}
+	return "";
+}
+
+//Save Cookies
+function setCookie(c_name,value,expiredays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+((expiredays==null) ? "" : "; expires="+exdate.toUTCString());
+}
+
+document.getElementById('content').addEventListener('keyup',function(e) {
+    if (e.keyCode === 13) {
+        var txt = trim(this.innerText); 
+        this.innerHTML="";
+        document.execCommand('insertHTML', false,txt+"\n\n");
+        return false;
+    }
+});
+
+</script>
+<script src='//fullscreen.js.org/fullscreen.js?whwh'></script>
+</body>
+</html>
