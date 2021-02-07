@@ -4,7 +4,6 @@
 <title>Zapest</title>
 <meta charset="utf-8">
 <meta name=viewport content="width=device-width, initial-scale=1">
-<link rel="search" type="application/opensearchdescription+xml" title="Zapest" href="/_opensearch">
 <style>
   body{
     padding:1em;
@@ -23,11 +22,9 @@ p {
     margin: 0;
 }
 
-
 @media screen and (min-width: 0px) and (max-width: 400px) {
   #fsicon { display: none; }  /* show it on small screens */
 }
-
 
 </style>
 </head>
@@ -38,8 +35,7 @@ p {
 <script>
 
 var content;
-var helpText = 'Click here and start typing!';
-
+var helpText = "\n"+'Click here and start typing!';
 
 //function that alows editing
 function editme(){
@@ -49,7 +45,7 @@ function editme(){
 
 //To save 
 function saveme(){
-	localStorage.setItem('content', content.innerText);
+	localStorage.setItem('content', content.innerHTML);
 } 
 
 //Load contents onload
@@ -57,16 +53,8 @@ function loadContent(){
 
     content = document.getElementById("content");
     content.addEventListener("input", saveme);
-    content.innerHTML = localStorage.getItem('content')+" \n __";
+    content.innerHTML = localStorage.getItem('content')+ helpText;
 	
-}
-
-//Clear the contents
-function clearme(){
-	if(getCookie('content')){
-		setCookie('content','',365);
-	}
-	content.innerHTML=helpText;
 }
 
 window.scrollTo(0,1);
