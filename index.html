@@ -52,8 +52,8 @@ function loadContent(){
 		text = helpText;
 	}
 	
-    content.addEventListener("input", function (){ localStorage.setItem('content', content.innerHTML); });
-    content.innerHTML = text;
+    content.addEventListener("input", function (){ localStorage.setItem('content', content.innerText); });
+    content.innerText = text;
 
 }
 
