@@ -52,7 +52,7 @@ function loadContent(){
 		text = helpText;
 	}
 	
-    content.addEventListener("input", localStorage.setItem('content', content.innerHTML));
+    content.addEventListener("input", function (){ localStorage.setItem('content', content.innerHTML); });
     content.innerHTML = text;
 
 }
