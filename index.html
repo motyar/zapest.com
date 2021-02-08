@@ -28,9 +28,9 @@ p {
 
 </style>
 </head>
-<body onload="javascript:loadContent();">
+<body onload="loadContent();">
 <div id="main">
-<div id="content" onclick="javascript:editme();"></div>
+<div id="content" onclick="editme();"></div>
 </div>
 <script>
 
@@ -43,18 +43,18 @@ function editme(){
 	content.focus();
 }
 
-//To save 
-function saveme(){
-	localStorage.setItem('content', content.innerHTML);
-} 
-
 //Load contents onload
 function loadContent(){	 
 
     content = document.getElementById("content");
-    content.addEventListener("input", saveme);
-    content.innerHTML = localStorage.getItem('content')+ helpText;
+    text = localStorage.getItem('content');
+	if(!text || text===""){
+		text = helpText;
+	}
 	
+    content.addEventListener("input", localStorage.setItem('content', content.innerHTML));
+    content.innerHTML = text;
+
 }
 
 window.scrollTo(0,1);
